@@ -1,35 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Digital Library</title>
-    <link rel="stylesheet" href="styles.css">
+  <title>PDF App</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1>Global Digital Library</h1>
-    <div class="seat-container" id="seatContainer"></div>
+<div class="container">
 
-    <!-- Popup Modal for Seat Details -->
-    <div id="seatModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Seat Details</h2>
-            <p><strong>Seat Number:</strong> <span id="seatNumber"></span></p>
-            <p><strong>Name:</strong> <input type="text" id="seatName"></p>
-            <p><strong>Shift Timing:</strong> <input type="text" id="seatTiming"></p>
-            <p><strong>Fees Status:</strong>
-                <select id="seatFees">
-                    <option value="Paid">Paid</option>
-                    <option value="Pending">Pending</option>
-                </select>
-            </p>
-            <p><strong>Occupied:</strong> <input type="checkbox" id="seatOccupied"></p>
-            <button id="saveSeat">Save</button>
-        </div>
-    </div>
+  <div class="sidebar">
+    <h2>Index</h2>
+    <ul id="indexList"></ul>
+  </div>
 
-    <script src="script.js"></script>
+  <div class="viewer">
+    <iframe id="pdfViewer" src="Trsbook.pdf#page=1"></iframe>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
