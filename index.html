@@ -1,24 +1,143 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>PDF App</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>PDF Viewer</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      font-family: Arial;
+      text-align: center;
+      color: white;
+    }
+
+    #toolbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: #222;
+      padding: 10px;
+      z-index: 100;
+    }
+
+    button {
+      padding: 8px 12px;
+      margin: 4px;
+      border: none;
+      border-radius: 5px;
+      background: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+
+    #viewer {
+      margin-top: 70px;
+    }
+
+    canvas {
+      display: block;
+      margin: 10px auto;
+      max-width: 100%;
+      background: white;
+    }
+  </style>
 </head>
 <body>
 
-<div class="container">
-
-  <div class="sidebar">
-    <h2>Index</h2>
-    <ul id="indexList"></ul>
-  </div>
-
-  <div class="viewer">
-    <iframe id="pdfFrame" src="viewer.html"></iframe>
-  </div>
-
+<div id="toolbar">
+  <button onclick="prevPage()">⬅ Prev</button>
+  <span id="page-info">Loading...</span>
+  <button onclick="nextPage()">Next ➡</button>
+  <button onclick="zoomIn()">Zoom +</button>
+  <button onclick="zoomOut()">Zoom -</button>
 </div>
 
-<script src="script.js"></script>
+<div id="viewer"></div>
+
+<!-- PDF.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+<script>
+  // 🔗 APNA PDF LINK YA FILE NAME
+  const url = "mypdf.pdf";
+  // GitHub use kar rahe ho to:
+  // const url = "https://yourusername.github.io/repo/mypdf.pdf";
+
+  const pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+  let pdfDoc = null;
+  let pageNum = 1;
+  let scale = 1.5;
+
+  const viewer = document.getElementById("viewer");
+
+  function renderPage(num) {
+    viewer.innerHTML = "";
+
+    pdfDoc.getPage(num).then(function(page) {
+      const viewport = page.getViewport({ scale: scale });
+
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      canvas.height = viewport.height;
+      canvas.width = viewport.width;
+
+      viewer.appendChild(canvas);
+
+      const renderContext = {
+        canvasContext: ctx,
+        viewport: viewport
+      };
+
+      page.render(renderContext);
+
+      document.getElementById("page-info").innerText =
+        "Page " + pageNum + " / " + pdfDoc.numPages;
+    });
+  }
+
+  function nextPage() {
+    if (pageNum < pdfDoc.numPages) {
+      pageNum++;
+      renderPage(pageNum);
+    }
+  }
+
+  function prevPage() {
+    if (pageNum > 1) {
+      pageNum--;
+      renderPage(pageNum);
+    }
+  }
+
+  function zoomIn() {
+    scale += 0.2;
+    renderPage(pageNum);
+  }
+
+  function zoomOut() {
+    if (scale > 0.6) {
+      scale -= 0.2;
+      renderPage(pageNum);
+    }
+  }
+
+  // Load PDF
+  pdfjsLib.getDocument(url).promise.then(function(pdf) {
+    pdfDoc = pdf;
+    renderPage(pageNum);
+  });
+</script>
+
 </body>
 </html>
