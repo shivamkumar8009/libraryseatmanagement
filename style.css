@@ -4,7 +4,11 @@ body {
     text-align: center;
 }
 
-/* 📚 List Page */
+/* List Page */
+#mainPage {
+    padding: 20px;
+}
+
 ul {
     list-style: none;
     padding: 0;
@@ -18,12 +22,12 @@ li {
     font-size: 18px;
 }
 
-/* ❌ Hidden */
+/* Hide */
 .hidden {
-    display: none;
+    display: none !important;
 }
 
-/* 🖼 Viewer Full Screen */
+/* Viewer Fullscreen */
 #viewer {
     position: fixed;
     top: 0;
@@ -35,7 +39,7 @@ li {
     flex-direction: column;
 }
 
-/* 🔝 Top Bar */
+/* Top Bar */
 .top-bar {
     display: flex;
     justify-content: space-between;
@@ -48,7 +52,7 @@ button {
     cursor: pointer;
 }
 
-/* 🖼 Image Container */
+/* Image */
 .image-container {
     flex: 1;
     display: flex;
@@ -57,10 +61,9 @@ button {
     overflow: hidden;
 }
 
-/* 📸 IMAGE (LANDSCAPE FIT) */
 img {
     max-width: 100%;
     max-height: 100%;
-    object-fit: contain; /* 👈 IMPORTANT (landscape fit) */
+    object-fit: contain;
     transition: transform 0.3s ease;
 }
