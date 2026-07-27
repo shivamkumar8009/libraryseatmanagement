@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+
+<canvas id="pdfCanvas"></canvas>
+
+<script>
+const url = "Trsbook.pdf";
+let pdfDoc = null;
+
+pdfjsLib.getDocument(url).promise.then(pdf => {
+  pdfDoc = pdf;
+  renderPage(1);
+});
+
+function renderPage(num) {
+  pdfDoc.getPage(num).then(page => {
+    const canvas = document.getElementById("pdfCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const viewport = page.getViewport({ scale: 1.5 });
+    canvas.height = viewport.height;
+    canvas.width = viewport.width;
+
+    page.render({
+      canvasContext: ctx,
+      viewport: viewport
+    });
+  });
+}
+
+// GLOBAL FUNCTION (important)
+window.goToPage = function(page) {
+  renderPage(page);
+}
+</script>
+
+</body>
+</html>
