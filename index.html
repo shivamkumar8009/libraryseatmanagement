@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Chapters Viewer</title>
+    <title>Chapter Viewer</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,8 +11,8 @@
 <div id="mainPage">
     <h1>Chapter List</h1>
     <ul>
-        <li onclick="openChapter('Trsbook_pages-to-jpg-0010.jpg')">Chapter 1</li>
-        <li onclick="openChapter('Trsbook_pages-to-jpg-0011.jpg')">Chapter 2</li>
+        <li onclick="openChapter('chapter1.jpg')">Chapter 1</li>
+        <li onclick="openChapter('chapter2.jpg')">Chapter 2</li>
     </ul>
 </div>
 
@@ -20,7 +20,7 @@
 <div id="viewer" class="hidden">
     <div class="top-bar">
         <button onclick="goBack()">⬅ Back</button>
-        <div class="controls">
+        <div>
             <button onclick="zoomIn()">➕</button>
             <button onclick="zoomOut()">➖</button>
             <button onclick="resetZoom()">🔄</button>
