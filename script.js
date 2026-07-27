@@ -1,5 +1,10 @@
 let zoomLevel = 1;
-const img = document.getElementById("chapterImage");
+let img;
+
+// Wait till page loads (IMPORTANT FIX)
+window.onload = function () {
+    img = document.getElementById("chapterImage");
+};
 
 function openChapter(image) {
     document.getElementById("mainPage").classList.add("hidden");
@@ -16,7 +21,7 @@ function goBack() {
     document.getElementById("mainPage").classList.remove("hidden");
 }
 
-/* 🔍 Zoom Controls */
+/* Zoom */
 function zoomIn() {
     zoomLevel += 0.2;
     updateZoom();
@@ -37,9 +42,9 @@ function updateZoom() {
     img.style.transform = `scale(${zoomLevel})`;
 }
 
-/* 🖱 Scroll Zoom */
+/* Scroll Zoom */
 document.addEventListener("wheel", function(e) {
-    if (!img.src) return;
+    if (!img || !img.src) return;
 
     if (e.deltaY < 0) {
         zoomLevel += 0.1;
