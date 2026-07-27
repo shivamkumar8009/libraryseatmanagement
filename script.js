@@ -1,19 +1,44 @@
 let zoomLevel = 1;
+const img = document.getElementById("chapterImage");
 
 function openChapter(image) {
     document.getElementById("mainPage").classList.add("hidden");
     document.getElementById("viewer").classList.remove("hidden");
 
-    const img = document.getElementById("chapterImage");
     img.src = "images/" + image;
+
     zoomLevel = 1;
-    img.style.transform = "scale(1)";
+    updateZoom();
 }
 
-// Zoom using mouse scroll
-document.addEventListener("wheel", function (e) {
-    const img = document.getElementById("chapterImage");
+function goBack() {
+    document.getElementById("viewer").classList.add("hidden");
+    document.getElementById("mainPage").classList.remove("hidden");
+}
 
+/* 🔍 Zoom Controls */
+function zoomIn() {
+    zoomLevel += 0.2;
+    updateZoom();
+}
+
+function zoomOut() {
+    zoomLevel -= 0.2;
+    if (zoomLevel < 1) zoomLevel = 1;
+    updateZoom();
+}
+
+function resetZoom() {
+    zoomLevel = 1;
+    updateZoom();
+}
+
+function updateZoom() {
+    img.style.transform = `scale(${zoomLevel})`;
+}
+
+/* 🖱 Scroll Zoom */
+document.addEventListener("wheel", function(e) {
     if (!img.src) return;
 
     if (e.deltaY < 0) {
@@ -23,10 +48,5 @@ document.addEventListener("wheel", function (e) {
         if (zoomLevel < 1) zoomLevel = 1;
     }
 
-    img.style.transform = `scale(${zoomLevel})`;
+    updateZoom();
 });
-
-function goBack() {
-    document.getElementById("viewer").classList.add("hidden");
-    document.getElementById("mainPage").classList.remove("hidden");
-}
